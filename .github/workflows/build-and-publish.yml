@@ -53,12 +53,20 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: notcenzo/hugo-site:v0
+          tags: notcenzo/hugo-site:${{ github.sha }}
       
+      - name: Generate deploy yml
+        uses: danielr1996/envsubst-action@1.0.0
+        with:
+          input: template-deploy.yml
+          output: my-deploy.yml
+        env:
+          IMG_TAG: ${{ github.sha }}
+
       # Deploy on k8s
       - name: Deploy website on K8s cluster
         uses: giorio94/kubectl-oidc-action@1.1.0
         with:
           kubeconfig: ${{ secrets.KUBECONFIG }}
-          args: apply -f template-deploy.yml --namespace=sandbox-s291504
+          args: apply -f my-deploy.yml --namespace=sandbox-s291504
 
