@@ -1,4 +1,3 @@
-
 # This is a basic workflow to help you get started with Actions
 name: Docker build and publish
 
@@ -68,5 +67,5 @@ jobs:
         uses: giorio94/kubectl-oidc-action@1.1.0
         with:
           kubeconfig: ${{ secrets.KUBECONFIG }}
-          args: apply -f template-deploy.yml --namespace=sandbox-s291504
+          args: apply -f my-deploy.yml --namespace=sandbox-s291504
 
