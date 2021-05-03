@@ -1,1 +1,5 @@
-theme = "hugo-learn"
+baseURL = "https://hugosite-s291504.crownlabs.polito.it/"
+languageCode = "en-it"
+title = "My Personal Site"
+theme="personal-web"
+
