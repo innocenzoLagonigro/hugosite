@@ -1,0 +1,6 @@
+.dockerignore
+
+public/
+.git/
+.gitmodules/
+.gitignore/
