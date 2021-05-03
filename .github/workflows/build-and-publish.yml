@@ -1,5 +1,5 @@
-# This is a basic workflow to help you get started with Actions
 
+# This is a basic workflow to help you get started with Actions
 name: Docker build and publish
 
 # Controls when the action will run. 
@@ -26,14 +26,31 @@ jobs:
         with:
           submodules: true # to also include HUGO themes which are submodules
 
-      # Build and push Docker image part of the workflow
+      # Build and push Docker image part of the workflow (custom Action)
+      #- name: Build and push Docker image
+      #  uses: mr-smithers-excellent/docker-build-push@v5
+      #  with:
+      #    image: notcenzo/hugo-site
+      #    tags: v0
+      #    registry: docker.io
+      #    dockerfile: Dockerfile
+      #    username: ${{ secrets.DOCKERHUB_USER }}
+      #    password: ${{ secrets.DOCKERHUB_PSW }}
+      #    
+      
+      # Set up Docker Buildx (official Github Action)
+      - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+          uses: docker/login-action@v1
+          with:
+            username: ${{ secrets.DOCKERHUB_USER }}
+            password: ${{ secrets.DOCKERHUB_PSW }}
+
       - name: Build and push Docker image
-        uses: mr-smithers-excellent/docker-build-push@v5
-        with:
-          image: notcenzo/hugo-site
-          tags: v0
-          registry: docker.io
-          dockerfile: Dockerfile
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_PSW }}
-          
+          id: docker_build
+          uses: docker/build-push-action@v2
+          with:
+            push: true
+            tags: notcenzo/hugo-site:v0
