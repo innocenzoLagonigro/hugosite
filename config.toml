@@ -1,4 +1,1 @@
-baseURL = "http://hugosite-s291504.crownlabs.polito.it/"
-languageCode = "en-us"
-title = "My New Hugo Site"
-theme = "ananke"
+theme = "hugo-learn"
